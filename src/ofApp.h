@@ -25,5 +25,6 @@ class ofApp : public ofBaseApp{
     int camWidth;
     int camHeight;
     
-    ofxCvColorImage colorImg; //OpenCVで扱う画像
+    ofxCvColorImage colorImg; //OpenCVで扱うカラー画像
+    ofxCvGrayscaleImage grayImg; //OpenCVで扱うグレースケール画像
 };

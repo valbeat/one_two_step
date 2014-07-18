@@ -9,12 +9,13 @@ void ofApp::setup(){
     glBlendFunc(GL_SRC0_ALPHA, GL_ONE);
     
     //カメラの設定
-    camWidth = 1920;
-    camHeight = 1080;
+    camWidth = 1920 / 4;
+    camHeight = 1080 / 4;
     camera.setVerbose(true);
     camera.setDeviceID(0);
     camera.initGrabber(camWidth, camHeight);
     //OpenCVで解析する画像の領域を確保
+    colorImg.allocate(camWidth, camHeight);
     colorImg.allocate(camWidth, camHeight);
 }
 
@@ -25,13 +26,15 @@ void ofApp::update(){
     newFrameFlag = camera.isFrameNew();
     if (newFrameFlag) {
         colorImg.setFromPixels(camera.getPixels(), camWidth, camHeight);
+        grayImg = colorImg;
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofSetColor(0xffffff);
-    camera.draw(0,0);
+    colorImg.draw(0,0);
+    grayImg.draw(camWidth + 10, 0);
 }
 
 //--------------------------------------------------------------
