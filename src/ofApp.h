@@ -24,8 +24,7 @@ class ofApp : public ofBaseApp{
     ofVideoGrabber camera; //ビデオ入力
     int camWidth;
     int camHeight;
-    
-<<<<<<< HEAD
+
     ofxCvColorImage colorImg; //OpenCVで扱うカラー画像
     ofxCvGrayscaleImage grayImg; //OpenCVで扱うグレースケール画像
     ofxCvGrayscaleImage grayBg; //背景のグレースケール画像
@@ -34,7 +33,4 @@ class ofApp : public ofBaseApp{
     
     bool bgFlag;
     int threshold;
-=======
-    ofxCvColorImage colorImg; //OpenCVで扱う画像
->>>>>>> 16fab5e67ee6911a161c47298e7a70736ee883b7
 };
