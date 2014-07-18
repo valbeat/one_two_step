@@ -16,7 +16,11 @@ void ofApp::setup(){
     camera.initGrabber(camWidth, camHeight);
     //OpenCVで解析する画像の領域を確保
     colorImg.allocate(camWidth, camHeight);
-    colorImg.allocate(camWidth, camHeight);
+    grayImg.allocate(camWidth, camHeight);
+    grayBg.allocate(camWidth, camHeight);
+    grayDiff.allocate(camWidth, camHeight);
+    bgFlag = true;
+    threshold = 100;
 }
 
 //--------------------------------------------------------------
@@ -27,19 +31,48 @@ void ofApp::update(){
     if (newFrameFlag) {
         colorImg.setFromPixels(camera.getPixels(), camWidth, camHeight);
         grayImg = colorImg;
+        
+        if (bgFlag) {
+            grayBg = grayImg;
+            bgFlag = false;
+        }
+        grayDiff.absDiff(grayBg, grayImg);
+        grayDiff.threshold(threshold);
+        contourFinder.findContours(grayDiff, 20, (camWidth*camHeight)/3, 10, true);
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    ofNoFill();
     ofSetColor(0xffffff);
     colorImg.draw(0,0);
     grayImg.draw(camWidth + 10, 0);
+    grayBg.draw(0, camHeight + 10);
+    grayDiff.draw(camWidth + 10, camHeight + 10);
+    for (int i = 0; i < contourFinder.nBlobs; i++) {
+        contourFinder.blobs[i].draw(camWidth,camHeight);
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    switch (key) {
+        case ' ':
+            bgFlag = true;
+            break;
+        case '+':
+            threshold ++;
+            if (threshold > 255) threshold = 255;
+            break;
+        case '-':
+            threshold --;
+            if (threshold < 0) threshold = 0;
+            break;
+        case 'f':
+            ofToggleFullscreen();
+            break;
+    }
 }
 
 //--------------------------------------------------------------

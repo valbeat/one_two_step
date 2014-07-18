@@ -27,4 +27,10 @@ class ofApp : public ofBaseApp{
     
     ofxCvColorImage colorImg; //OpenCVで扱うカラー画像
     ofxCvGrayscaleImage grayImg; //OpenCVで扱うグレースケール画像
+    ofxCvGrayscaleImage grayBg; //背景のグレースケール画像
+    ofxCvGrayscaleImage grayDiff; //背景との差分
+    ofxCvContourFinder contourFinder; //輪郭抽出
+    
+    bool bgFlag;
+    int threshold;
 };
