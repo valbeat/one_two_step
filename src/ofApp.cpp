@@ -7,22 +7,31 @@ void ofApp::setup(){
     //画面の混色の設定を加算合成にする
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC0_ALPHA, GL_ONE);
+    
+    //カメラの設定
     camWidth = 1920;
     camHeight = 1080;
     camera.setVerbose(true);
     camera.setDeviceID(0);
     camera.initGrabber(camWidth, camHeight);
+    //OpenCVで解析する画像の領域を確保
+    colorImg.allocate(camWidth, camHeight);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    bool newFrameFlag = false;
     camera.update();
+    newFrameFlag = camera.isFrameNew();
+    if (newFrameFlag) {
+        colorImg.setFromPixels(camera.getPixels(), camWidth, camHeight);
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofSetColor(0xffffff);
-    camera.draw(20,20);
+    camera.draw(0,0);
 }
 
 //--------------------------------------------------------------

@@ -21,8 +21,9 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-    ofVideoGrabber camera;
+    ofVideoGrabber camera; //ビデオ入力
     int camWidth;
     int camHeight;
-		
+    
+    ofxCvColorImage colorImg; //OpenCVで扱う画像
 };
